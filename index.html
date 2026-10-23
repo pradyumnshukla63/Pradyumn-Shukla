@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DHURANDHAR: The Cold Archive | Aditya Dhar | A Spy Thriller Scrollytelling Experience</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts & Custom Tactical Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              black: '#05070a',
+              card: '#0c131e',
+              border: 'rgba(255, 255, 255, 0.08)',
+              amber: '#f59e0b',
+              cyan: '#06b6d4',
+              crimson: '#ef4444',
+              emerald: '#10b981',
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            display: ['Rajdhani', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#05070a] text-slate-200 antialiased selection:bg-amber-500/30 selection:text-amber-300">
+
+  <!-- CRT Scanline & Lens Vignette Overlays -->
+  <div class="crt-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress-bar" class="scroll-tracker-bar"></div>
+
+  <!-- FIXED HUD TOP NAV -->
+  <header class="hud-header">
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-mono text-xs font-bold tracking-widest text-emerald-400 uppercase">RAW SEC-NODE // LIVE</span>
+      </div>
+      <div class="hidden md:block h-4 w-px bg-slate-700"></div>
+      <div class="hidden md:flex items-center space-x-2 font-mono text-xs text-slate-400">
+        <span class="text-amber-400 font-semibold">TARGET:</span>
+        <span id="hud-coordinates" class="tracking-wider">28°36'50"N 77°12'18"E [NEW DELHI]</span>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-3 sm:space-x-4">
+      <div class="hidden lg:flex items-center font-mono text-xs text-slate-400 bg-slate-900/60 px-3 py-1 rounded border border-slate-800">
+        <span class="text-slate-500 mr-2">LOG:</span>
+        <span id="hud-chapter" class="text-amber-400 font-bold">PROLOGUE: THE CATALYST</span>
+      </div>
+
+      <div class="hidden sm:block font-mono text-xs text-cyan-400" id="hud-timecode">
+        UTC 00:00:00.00Z
+      </div>
+
+      <!-- Audio Atmosphere Synthesizer Button -->
+      <button id="audio-toggle-btn" class="flex items-center space-x-2 text-xs font-mono px-3 py-1.5 rounded bg-slate-900/80 border border-slate-700 hover:border-amber-500 text-slate-300 transition-all">
+        <div class="flex items-end h-3 space-x-0.5">
+          <span class="audio-eq-bar"></span>
+          <span class="audio-eq-bar"></span>
+          <span class="audio-eq-bar"></span>
+          <span class="audio-eq-bar"></span>
+        </div>
+        <span class="audio-status-text font-bold tracking-wider">AUDIO: MUTED</span>
+      </button>
+
+      <!-- CRT Effect Toggle -->
+      <button id="crt-toggle-btn" class="hidden sm:flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded bg-slate-900/80 border border-slate-700 hover:border-cyan-500 text-slate-400 hover:text-cyan-400 transition-all">
+        <i data-lucide="tv" class="w-3.5 h-3.5"></i>
+        <span class="crt-status">CRT: ON</span>
+      </button>
+
+      <!-- Jump to Terminal -->
+      <a href="#mission-terminal" class="text-xs font-mono px-3 py-1.5 bg-amber-500/10 border border-amber-500/40 text-amber-400 hover:bg-amber-500 hover:text-black rounded transition-all font-bold">
+        TERMINAL
+      </a>
+    </div>
+  </header>
+
+  <!-- ======================== HERO SECTION ======================== -->
+  <section class="relative min-h-screen pt-28 pb-16 flex flex-col justify-between px-6 sm:px-12 lg:px-24 overflow-hidden border-b border-slate-800/80">
+    <!-- Background Grid Lines -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f293710_1px,transparent_1px),linear-gradient(to_bottom,#1f293710_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto w-full my-auto text-center lg:text-left pt-8">
+      
+      <!-- Top Classification Tag -->
+      <div class="inline-flex items-center space-x-3 mb-6 px-3.5 py-1.5 rounded-full bg-red-950/40 border border-red-500/40 text-red-400 font-mono text-xs tracking-widest uppercase">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+        <span>LEVEL-9 DECLASSIFIED DOSSIER // PRIME DIRECTIVE</span>
+      </div>
+
+      <!-- Main Glitch Movie Title -->
+      <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black font-serif tracking-tight text-white uppercase leading-none drop-shadow-2xl">
+        <span class="glitch-text inline-block" data-text="DHURANDHAR">DHURANDHAR</span>
+      </h1>
+
+      <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-4 font-mono text-xs sm:text-sm text-slate-400 tracking-wider">
+        <span class="text-amber-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+          <i data-lucide="clapperboard" class="w-4 h-4 text-amber-400"></i> DIRECTED BY ADITYA DHAR
+        </span>
+        <span class="text-slate-600">•</span>
+        <span class="text-cyan-400 font-medium">GEOPOLITICAL SPY ACTION THRILLER</span>
+        <span class="text-slate-600">•</span>
+        <span class="bg-slate-800/90 text-slate-300 px-2.5 py-0.5 rounded border border-slate-700">DUOLOGY: PART 1 & 2</span>
+      </div>
+
+      <!-- Narrative Subtitle Hook -->
+      <p class="mt-6 text-lg sm:text-2xl text-slate-300 max-w-3xl font-sans font-light leading-relaxed">
+        When diplomatic patience burns out, the shadows retaliate. Follow India's deepest undercover intelligence operative as he surrenders his identity, infiltrates the blood-drenched ganglands of <span class="text-amber-400 font-medium">Lyari, Karachi</span>, and dismantles a state-backed terror syndicate from the inside.
+      </p>
+
+      <!-- Key Cast Badges -->
+      <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2 max-w-4xl">
+        <span class="text-xs font-mono text-slate-500 uppercase tracking-widest mr-2 flex items-center">
+          <i data-lucide="shield" class="w-3.5 h-3.5 mr-1 text-slate-400"></i> KEY ASSETS:
+        </span>
+        <span class="text-xs font-mono px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded text-slate-200">
+          <strong class="text-amber-400 font-bold">RANVEER SINGH</strong> (Hamza Mazari)
+        </span>
+        <span class="text-xs font-mono px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded text-slate-200">
+          <strong class="text-amber-400 font-bold">AKSHAYE KHANNA</strong> (Rehman Dakait)
+        </span>
+        <span class="text-xs font-mono px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded text-slate-200">
+          <strong class="text-amber-400 font-bold">SANJAY DUTT</strong> (Choudhary Aslam)
+        </span>
+        <span class="text-xs font-mono px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded text-slate-200">
+          <strong class="text-cyan-400 font-bold">R. MADHAVAN</strong> (Ajay Sanyal)
+        </span>
+        <span class="text-xs font-mono px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded text-slate-200">
+          <strong class="text-red-400 font-bold">ARJUN RAMPAL</strong> (Major Iqbal)
+        </span>
+      </div>
+
+      <!-- Action Buttons & Audio Callout -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+        <a href="#ch-catalyst" class="btn-tactical text-sm px-6 py-3 shadow-lg shadow-amber-500/10">
+          <i data-lucide="scroll" class="w-4 h-4"></i>
+          <span>BEGIN SCROLLYTELLING ODYSSEY</span>
+        </a>
+        <button onclick="window.audioEngine.toggle()" class="btn-tactical cyan text-sm px-6 py-3">
+          <i data-lucide="radio" class="w-4 h-4"></i>
+          <span>ACTIVATE AUDIO SURVEILLANCE</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Bottom Scroll Indicator & Telemetry Grid -->
+    <div class="relative z-10 max-w-6xl mx-auto w-full pt-8 flex flex-col sm:flex-row items-center justify-between border-t border-slate-800/60 font-mono text-xs text-slate-500 gap-4">
+      <div class="flex items-center space-x-4">
+        <span>SECURITY CLEARANCE: <strong class="text-slate-300">RESTRICTED 07</strong></span>
+        <span>CIPHER: <strong class="text-slate-300">AES-256-GCM</strong></span>
+      </div>
+      <div class="flex items-center space-x-2 text-amber-400/80 animate-bounce">
+        <span>SCROLL DOWN TO DECRYPT THE DOSSIER</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CHAPTER 1: THE CATALYST (1999-2001) ======================== -->
+  <!-- Scrollytelling Container: Sticky Visual on Left, Narrative on Right -->
+  <section id="ch-catalyst" class="scrolly-container border-b border-slate-800/80">
+    
+    <!-- STICKY STAGE (LEFT) -->
+    <div class="scrolly-stage">
+      <div class="w-full h-full max-h-[640px] radar-screen hud-corner-bracket p-6 flex flex-col justify-between">
+        
+        <!-- Top HUD Line -->
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-widest">TACTICAL SATELLITE RADAR</span>
+          </div>
+          <span id="catalyst-coords" class="font-mono text-xs text-cyan-400">LAT: 31.62°N | LON: 65.73°E</span>
+        </div>
+
+        <!-- Center Interactive Map Visualizer with Simulated South Asia Radar Grid -->
+        <div class="relative flex-1 my-4 flex items-center justify-center overflow-hidden rounded bg-[#070d18] border border-slate-800">
+          
+          <!-- Tactical Canvas Radar -->
+          <canvas id="radar-canvas" class="absolute inset-0 w-full h-full opacity-60"></canvas>
+
+          <!-- SVG South Asia Border Nodes & Lines -->
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 600 450" preserveAspectRatio="xMidYMid meet">
+            <!-- Grid Lines -->
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+
+            <!-- Historical Connection Vector: Kandahar to Delhi -->
+            <line x1="192" y1="162" x2="408" y2="234" stroke="rgba(239,68,68,0.5)" stroke-dasharray="6,4" stroke-width="2"/>
+            <!-- Border infiltration Vector: Thar to Lyari -->
+            <line x1="408" y1="234" x2="220" y2="340" stroke="rgba(245,158,11,0.5)" stroke-dasharray="4,4" stroke-width="2"/>
+
+            <!-- Node 1: Kandahar (1999) -->
+            <circle cx="192" cy="162" r="6" fill="#ef4444" />
+            <text x="140" y="150" fill="#f87171" font-size="11" font-family="'JetBrains Mono'" font-weight="bold">KANDAHAR (IC-814)</text>
+
+            <!-- Node 2: New Delhi (Parliament) -->
+            <circle cx="408" cy="234" r="7" fill="#06b6d4" />
+            <text x="420" y="240" fill="#67e8f9" font-size="11" font-family="'JetBrains Mono'" font-weight="bold">NEW DELHI [IB HQ]</text>
+
+            <!-- Node 3: Karachi / Lyari -->
+            <circle cx="220" cy="340" r="7" fill="#f59e0b" />
+            <text x="130" y="360" fill="#fbbf24" font-size="11" font-family="'JetBrains Mono'" font-weight="bold">KARACHI (LYARI)</text>
+          </svg>
+
+          <!-- Dynamic Radar Ping Marker -->
+          <div id="catalyst-map-ping" class="map-marker" style="top: 36%; left: 32%;">
+            <span class="ping bg-red-500"></span>
+            <span class="dot text-red-500"></span>
+          </div>
+
+          <!-- Floating Overlay Monitor Panel -->
+          <div class="absolute bottom-4 left-4 right-4 bg-slate-900/90 backdrop-blur-md p-4 rounded border border-slate-700/80 shadow-2xl">
+            <div class="flex items-center justify-between mb-1">
+              <span id="catalyst-tag" class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold tracking-wider">
+                CRITICAL AIRSPACE BREACH
+              </span>
+              <span class="stamp stamp-classified text-[10px] py-0.5 px-2">TOP SECRET</span>
+            </div>
+            <h4 id="catalyst-headline" class="text-sm font-mono font-bold text-slate-100">IC-814 KANDAHAR CRISIS</h4>
+            <p id="catalyst-desc" class="text-xs text-slate-300 font-sans mt-1 line-clamp-3 leading-relaxed">
+              Dec 1999: Indian Airlines Flight IC-814 hijacked. 176 souls held hostage in Taliban-controlled Kandahar tarmac. India forced to release 3 dreaded militants. The scars ignite a vow of permanent retaliation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Monitor Footer Stats -->
+        <div class="grid grid-cols-3 gap-2 font-mono text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+          <div>DEFCON: <span class="text-red-400 font-bold">LEVEL 2</span></div>
+          <div>DOCTRINE: <span class="text-amber-400 font-bold">ASYMMETRIC</span></div>
+          <div>CLEARANCE: <span class="text-cyan-400 font-bold">DIRECTOR ONLY</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCROLLING NARRATIVE STEPS (RIGHT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: IC-814 Kandahar Hijack -->
+      <div class="step-card crimson hud-corner-bracket crimson active-step" data-step-id="stage-catalyst-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/30">
+            INCIDENT ARCHIVE // DEC 1999
+          </span>
+          <span class="font-mono text-xs text-slate-500">FILE REF: IC-814</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The Winter of Humiliation: Kandahar</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Indian Airlines Flight 814 leaves Kathmandu and enters nightmare territory. Trapped on the freezing tarmac of Taliban-guarded Kandahar, India is coerced into releasing three top-tier terrorists in exchange for civilian lives.
+        </p>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Inside the corridors of New Delhi, the humiliation burns deep. The enemy has weaponized asymmetric proxies—and conventional diplomacy holds zero leverage against shadows.
+        </p>
+        <div class="p-3 bg-red-950/20 border border-red-900/40 rounded text-xs font-mono text-red-300 flex items-start space-x-2">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400 shrink-0 mt-0.5"></i>
+          <span>"Never again will the republic negotiate on the tarmac. A debt has been registered. It will be collected."</span>
+        </div>
+      </div>
+
+      <!-- STEP 2: Indian Parliament Siege -->
+      <div class="step-card crimson hud-corner-bracket crimson" data-step-id="stage-catalyst-2">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/30">
+            NATIONAL BREACH // 13 DEC 2001
+          </span>
+          <span class="font-mono text-xs text-slate-500">FILE REF: LOC-DELHI-01</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The Breach of the Temple</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Five heavily armed militants breach the Indian Parliament gates in a white Ambassador vehicle bearing forged VIP passes. Brave security personnel give their lives in the shootout, preventing a massacre of the country's entire legislative leadership.
+        </p>
+        <div class="my-4 p-4 rounded bg-slate-900/80 border border-slate-700/60 font-mono text-xs text-slate-300 space-y-2">
+          <div class="text-amber-400 font-bold uppercase tracking-wider">// INTERCEPTED TRANSMISSION:</div>
+          <p>Target coordinates verified. Terrorist module armed with AK-47s, explosives, and satellite link routed from across the border.</p>
+          <p class="text-slate-400">Classified finding: <span class="redacted">ISI Direct Line Connection</span> verified by RAW monitoring post.</p>
+        </div>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          The message is unequivocal: Border skirmishes will not deter an adversary acting through deniable syndicates. India must create its own ghost.
+        </p>
+      </div>
+
+      <!-- STEP 3: The North Block Directive: Project Dhurandhar -->
+      <div class="step-card hud-corner-bracket" data-step-id="stage-catalyst-3">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            DIRECTIVE 09 // WAR ROOM
+          </span>
+          <span class="font-mono text-xs text-slate-500">EYES ONLY // SANYAL</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Ajay Sanyal's Doctrine</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          In a sealed chamber of North Block, Intelligence Bureau Director <strong class="text-cyan-400 font-semibold">Ajay Sanyal (R. Madhavan)</strong> pitches the unthinkable: A covert offensive doctrine codenamed <strong class="text-amber-400 font-serif">"DHURANDHAR"</strong>.
+        </p>
+        <blockquote class="border-l-2 border-amber-500 pl-4 py-1 italic text-slate-200 text-sm sm:text-base my-4 bg-amber-500/5">
+          "To kill a venomous snake, you don't wave a stick outside its hole. You send a predator directly into its nest. We don't strike from across the border. We become the street."
+        </blockquote>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          The mission: Infiltrate the Karachi underworld, embed in the violent Lyari gang syndicates, and sever the unholy alliance between street kingpins and military puppeteers before the next catastrophe strikes Indian soil.
+        </p>
+        <div class="flex items-center space-x-2">
+          <span class="stamp stamp-declassified">PROJECT AUTHORIZED</span>
+          <span class="text-xs font-mono text-emerald-400">ZERO STATE ACKNOWLEDGMENT</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== CHAPTER 2: THE ERASURE (RANVEER SINGH) ======================== -->
+  <section id="ch-erasure" class="scrolly-container reverse border-b border-slate-800/80 bg-[#060a10]">
+    
+    <!-- SCROLLING NARRATIVE STEPS (LEFT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: Deconstructing Captain Jaskirat -->
+      <div class="step-card cyan hud-corner-bracket cyan active-step" data-step-id="stage-erasure-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+            PHASE I: BIOMETRIC SCRUB
+          </span>
+          <span class="font-mono text-xs text-slate-500">AGENT CODE: PHANTOM-9</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Erasing Captain Jaskirat Singh Rangi</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          He was one of India's most decorated special forces commandos. Master sniper, combat diver, fluent in Punjabi, Pashto, and Balochi. But to execute Project Dhurandhar, <strong class="text-cyan-400">Captain Jaskirat Singh Rangi</strong> had to cease to exist.
+        </p>
+        <ul class="font-mono text-xs text-slate-300 space-y-2.5 my-4 bg-slate-900/60 p-4 rounded border border-slate-800">
+          <li class="flex items-center text-red-400"><i data-lucide="x-circle" class="w-4 h-4 mr-2"></i> Military Service Record: <span class="ml-1 text-slate-400">Classified as 'Deceased during training incident'</span></li>
+          <li class="flex items-center text-red-400"><i data-lucide="x-circle" class="w-4 h-4 mr-2"></i> National ID & Biometrics: <span class="ml-1 text-slate-400">Purged from central databases</span></li>
+          <li class="flex items-center text-red-400"><i data-lucide="x-circle" class="w-4 h-4 mr-2"></i> Family Contact: <span class="ml-1 text-slate-400">Permanently severed. No farewell.</span></li>
+        </ul>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          The ultimate sacrifice of an undercover spy: If you succeed, nobody will ever pin a medal to your chest. If you are caught, your homeland will swear on television they have never heard your name.
+        </p>
+      </div>
+
+      <!-- STEP 2: The Birth of Hamza Ali Mazari -->
+      <div class="step-card hud-corner-bracket" data-step-id="stage-erasure-2">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            PHASE II: THE REBIRTH
+          </span>
+          <span class="font-mono text-xs text-amber-400">ALIAS: HAMZA MAZARI</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Forged in Blood: Hamza Ali Mazari</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Out of the ashes of Jaskirat emerges <strong class="text-amber-400 font-bold">Hamza Ali Mazari</strong> (Ranveer Singh).
+        </p>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Dressed in rugged shalwar kameez with a worn wool shawl and a lethal glint in his eyes, Hamza is backstoried as a hot-tempered Baloch gunrunner who escaped a tribal blood feud. He is reckless, brutally skilled in hand-to-hand combat, and hungry for survival.
+        </p>
+        <div class="p-4 rounded bg-amber-950/20 border border-amber-800/40 text-xs font-mono text-amber-300 space-y-1.5">
+          <div class="font-bold uppercase tracking-wider text-amber-400">BORDER CROSSING LOG:</div>
+          <div>LOC: Thar Desert Corridor, Indo-Pak Zero Line</div>
+          <div>TIMESTAMP: 02:40 AM // MOONLESS NIGHT</div>
+          <div>ASSET STATUS: Deep cover established. No extraction protocol available.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STICKY STAGE (RIGHT: Biometric Identity Morphing Chamber) -->
+    <div class="scrolly-stage">
+      <div class="w-full h-full max-h-[640px] bg-slate-950/90 border border-slate-800 rounded-xl hud-corner-bracket cyan p-6 flex flex-col justify-between shadow-2xl overflow-hidden relative">
+        
+        <!-- Top Status Bar -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-mono text-xs text-slate-400 flex items-center gap-2">
+            <i data-lucide="fingerprint" class="w-4 h-4 text-cyan-400 animate-pulse"></i>
+            BIOMETRIC IDENTITY DISSOLUTION SCANNER
+          </span>
+          <span class="stamp stamp-classified text-[10px] py-0.5 px-2">EYES ONLY</span>
+        </div>
+
+        <!-- Morphing Persona Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto relative">
+          
+          <!-- Persona A: Indian Commando -->
+          <div id="persona-jaskirat" class="p-4 rounded-lg bg-slate-900/80 border border-cyan-500/30 transition-all duration-500">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono text-cyan-400 uppercase font-bold tracking-wider">OFFICIAL STATUS: PURGED</span>
+              <i data-lucide="shield-alert" class="w-4 h-4 text-cyan-400"></i>
+            </div>
+            <!-- Commando Silhouette Graphic -->
+            <div class="w-full h-36 bg-gradient-to-b from-cyan-950/40 to-slate-900 rounded flex items-center justify-center border border-cyan-500/20 relative overflow-hidden">
+              <svg class="w-24 h-24 text-cyan-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path>
+                <path d="M4 22a8 8 0 0 1 16 0H4z"></path>
+                <circle cx="12" cy="7" r="1.5" fill="currentColor"></circle>
+              </svg>
+              <div class="absolute inset-0 bg-[radial-gradient(#06b6d415_1px,transparent_1px)] [background-size:8px_8px]"></div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-mono text-slate-500">SERVICE #8812-JK</span>
+            </div>
+            <h4 class="font-mono text-xs font-bold text-slate-200 mt-3">CAPT. JASKIRAT SINGH RANGI</h4>
+            <p class="text-[11px] font-mono text-slate-400 mt-1">Special Forces // Combat Marksman</p>
+            <div class="mt-2 text-[10px] font-mono text-red-400">RECORDS BURNED: 100% COMPLETE</div>
+          </div>
+
+          <!-- Persona B: Infiltrator Hamza -->
+          <div id="persona-hamza" class="p-4 rounded-lg bg-slate-900/80 border border-amber-500/30 transition-all duration-500 opacity-40">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono text-amber-400 uppercase font-bold tracking-wider">INFILTRATOR CODENAME</span>
+              <i data-lucide="skull" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <!-- Infiltrator Rugged Silhouette Graphic -->
+            <div class="w-full h-36 bg-gradient-to-b from-amber-950/40 to-slate-900 rounded flex items-center justify-center border border-amber-500/20 relative overflow-hidden">
+              <svg class="w-24 h-24 text-amber-400/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M12 2C8 2 6 5 6 9v2c0 4 2 7 6 7s6-3 6-7V9c0-4-2-7-6-7z"></path>
+                <path d="M3 22c0-4 4-6 9-6s9 2 9 6H3z"></path>
+                <line x1="8" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"></line>
+              </svg>
+              <div class="absolute inset-0 bg-[radial-gradient(#f59e0b15_1px,transparent_1px)] [background-size:8px_8px]"></div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-mono text-amber-500/80">CNIC #42101-78921-1</span>
+            </div>
+            <h4 class="font-mono text-xs font-bold text-amber-300 mt-3">HAMZA ALI MAZARI</h4>
+            <p class="text-[11px] font-mono text-slate-400 mt-1">Lyari Enforcer // Arms Smuggler</p>
+            <div class="mt-2 text-[10px] font-mono text-emerald-400">CREDENTIALS: VERIFIED HOSTILE</div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Dynamic Status Indicator -->
+        <div id="erasure-status-indicator" class="p-3 bg-slate-900 rounded border border-slate-800 font-mono text-xs text-slate-300 text-center">
+          <span class="text-cyan-400">ORIGINAL IDENTITY:</span> CAPTAIN JASKIRAT SINGH RANGI (ACTIVE RAW FILE)
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================== CHAPTER 3: THE LYARI LABYRINTH (AKSHAYE KHANNA) ======================== -->
+  <section id="ch-lyari" class="scrolly-container border-b border-slate-800/80">
+    
+    <!-- STICKY STAGE (LEFT: Karachi Tactical Street Map) -->
+    <div class="scrolly-stage">
+      <div class="w-full h-full max-h-[640px] bg-slate-950/95 border border-slate-800 rounded-xl hud-corner-bracket p-6 flex flex-col justify-between shadow-2xl relative">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-mono text-xs font-bold text-amber-400 flex items-center gap-2">
+            <i data-lucide="crosshair" class="w-4 h-4 text-amber-500 animate-spin"></i>
+            SURVEILLANCE GRID: LYARI & KARACHI HARBOR
+          </span>
+          <span class="font-mono text-[10px] text-slate-500">GRID SECTOR: 24.86°N / 67.00°E</span>
+        </div>
+
+        <!-- Karachi Urban Tactical Grid -->
+        <div class="relative flex-1 my-4 bg-[#080d16] border border-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
+          
+          <svg class="w-full h-full" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet">
+            <!-- Coastline & Port Harbor -->
+            <path d="M 0,280 Q 150,260 250,300 T 500,280 L 500,400 L 0,400 Z" fill="#091424" stroke="#1e293b" stroke-width="1.5" />
+            <text x="20" y="360" fill="#38bdf8" font-size="11" font-family="'JetBrains Mono'" opacity="0.6">ARABIAN SEA (NAVAL PATROL LINE)</text>
+
+            <!-- Lyari Dense District Poly -->
+            <polygon points="120,90 280,70 320,180 150,220" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.4)" stroke-dasharray="4,4" stroke-width="1.5" />
+            <text x="160" y="140" fill="#f59e0b" font-size="13" font-family="'Cinzel'" font-weight="bold">LYARI DISTRICT</text>
+            <text x="170" y="160" fill="#f59e0b" font-size="9" font-family="'JetBrains Mono'" opacity="0.8">GANG WAR ZONE</text>
+
+            <!-- Kemari Docks Poly -->
+            <polygon points="260,250 400,240 430,310 280,330" fill="rgba(6,182,212,0.08)" stroke="rgba(6,182,212,0.4)" stroke-dasharray="4,4" stroke-width="1.5" />
+            <text x="290" y="290" fill="#06b6d4" font-size="11" font-family="'JetBrains Mono'" font-weight="bold">KEMARI DOCKS</text>
+
+            <!-- Connecting Smuggling Artery -->
+            <path d="M 230,190 Q 250,220 320,250" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" />
+            <text x="270" y="225" fill="#f87171" font-size="9" font-family="'JetBrains Mono'">ARMS CONDUIT</text>
+          </svg>
+
+          <!-- Hotspot 1: Rehman Dakait Compound (Lyari) -->
+          <div id="ping-lyari" class="absolute top-[32%] left-[45%] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-300">
+            <span class="ping bg-amber-500"></span>
+            <span class="dot text-amber-500"></span>
+            <span id="label-lyari" class="absolute left-5 -top-2 whitespace-nowrap font-mono text-[11px] text-amber-400 bg-slate-950/90 px-2 py-0.5 rounded border border-amber-500/40">
+              REHMAN DAKAIT HQ
+            </span>
+          </div>
+
+          <!-- Hotspot 2: Kemari Docks Berth 14 -->
+          <div id="ping-docks" class="absolute top-[72%] left-[68%] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-300">
+            <span class="ping bg-cyan-500"></span>
+            <span class="dot text-cyan-500"></span>
+            <span id="label-docks" class="absolute left-5 -top-2 whitespace-nowrap font-mono text-[11px] text-slate-400 bg-slate-950/90 px-2 py-0.5 rounded border border-cyan-500/40">
+              BERTH 14 MUNITIONS
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Terminal Intercept Log -->
+        <div id="lyari-tactical-log" class="p-3 bg-slate-900 rounded border border-slate-800 font-mono text-xs text-amber-300/90 leading-relaxed">
+          [SURVEILLANCE FEED]: Rehman Dakait compound identified in Chakiwara. Armed sentries spotted on rooftops. Hamza Mazari granted entry.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCROLLING NARRATIVE STEPS (RIGHT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: Entering Rehman Dakait's Court -->
+      <div class="step-card hud-corner-bracket active-step" data-step-id="stage-lyari-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            CHAKIWARA // KINGPIN ENCOUNTER
+          </span>
+          <span class="font-mono text-xs text-slate-500">FILE: DAKAIT-01</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The Don of Lyari: Rehman Dakait</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Karachi's Lyari district is an urban fortress of narrow alleyways, Kalashnikov-bearing street gangs, football passion, and drug cartels. The undisputed king of this empire is <strong class="text-amber-400 font-semibold">Rehman Dakait (Akshaye Khanna)</strong>.
+        </p>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Akshaye Khanna delivers a spine-chilling performance of an intellectual crime warlord—soft-spoken, razor-sharp, smelling betrayal before it even hatches. When Hamza is brought before Rehman on suspicion of being an outsider, Hamza doesn't beg. He breaks the arm of Rehman's chief enforcer.
+        </p>
+        <div class="p-3 bg-amber-950/20 border border-amber-800/40 rounded text-xs font-mono text-amber-300">
+          "Rehman looked into Hamza's eyes and saw no fear—only the cold calculation of an assassin. Instead of putting a bullet between his eyes, Rehman handed him the keys to his armory."
+        </div>
+      </div>
+
+      <!-- STEP 2: The Kemari Docks Weapon Coup -->
+      <div class="step-card cyan hud-corner-bracket cyan" data-step-id="stage-lyari-2">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+            PORT COVERT ACTION
+          </span>
+          <span class="font-mono text-xs text-slate-500">BERTH-14 LOG</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Blood Trust at the Docks</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          To seal Rehman's unwavering trust, Hamza orchestrates an audacious ambush at the Kemari shipping docks against a rival gang led by Uzair Baloch's splinter cell. Under the thunder of shipping cranes and Arabian Sea waves, Hamza unleashes his elite commando combat reflexes.
+        </p>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Rehman Dakait crowns Hamza his right-hand lieutenant. But as Hamza unlocks the high-security shipping containers, he discovers something far more sinister than illegal arms: High-grade military electronics, encrypted communication relays, and target blueprints of Indian metropolitan infrastructure.
+        </p>
+        <div class="flex items-center gap-2 font-mono text-xs text-cyan-300">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i>
+          <span>PRIMARY TARGET INFILTRATION LEVEL: 94%</span>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================== CHAPTER 4: THE LAWLESS ENFORCER (SANJAY DUTT) ======================== -->
+  <section id="ch-triad" class="scrolly-container reverse border-b border-slate-800/80 bg-[#060a10]">
+    
+    <!-- SCROLLING NARRATIVE STEPS (LEFT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: Choudhary Aslam Enters -->
+      <div class="step-card crimson hud-corner-bracket crimson active-step" data-step-id="stage-triad-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/30">
+            ENCOUNTER SPECIALIST
+          </span>
+          <span class="font-mono text-xs text-red-400">SSP CHOUDHARY ASLAM</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The Trigger of Karachi: Choudhary Aslam</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Into this powder keg walks <strong class="text-red-400 font-bold">S.P. Choudhary Aslam (Sanjay Dutt)</strong>—the most feared, unhinged, and charismatic police officer in Sindh. Known for conducting over 80 fatal encounters, Aslam doesn't wait for warrants. He drives an armored SUV through front gates with aviators on and a cigarette burning between his lips.
+        </p>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Aslam's mandate is simple: exterminate Rehman Dakait's gang. But Aslam is also a player in the grand political chess match. When Aslam intercepts Hamza during an armed raid, a high-voltage standoff ensues.
+        </p>
+        <blockquote class="border-l-2 border-red-500 pl-4 py-1 italic text-slate-200 text-sm sm:text-base my-4 bg-red-500/5">
+          "Boy, in this city, even the bullets ask for my permission before they hit the wall. Who are you working for?"
+        </blockquote>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Hamza must outsmart both a ruthless ganglord and an unpredictable police juggernaut without blowing his undercover identity.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- STICKY STAGE (RIGHT: Triad Standoff Diagram) -->
+    <div class="scrolly-stage">
+      <div id="standoff-graph" class="w-full h-full max-h-[640px] bg-slate-950/95 border border-slate-800 rounded-xl hud-corner-bracket crimson p-6 flex flex-col justify-between shadow-2xl relative">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-mono text-xs font-bold text-red-400 flex items-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4 text-red-500"></i>
+            TRIAD OF FIRE: TACTICAL POWER STANDOFF
+          </span>
+          <span class="stamp stamp-classified text-[10px] py-0.5 px-2">FATAL RISK</span>
+        </div>
+
+        <!-- 3-Way Vector Visualization -->
+        <div class="relative flex-1 my-4 flex items-center justify-center">
+          
+          <svg class="w-full h-full" viewBox="0 0 450 380">
+            <!-- Triangle Vectors -->
+            <polygon points="225,60 380,310 70,310" fill="rgba(239,68,68,0.03)" stroke="rgba(239,68,68,0.3)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+            <!-- Central Tension Core -->
+            <circle cx="225" cy="220" r="30" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.5)" stroke-width="1" />
+            <text x="225" y="224" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="'JetBrains Mono'" font-weight="bold">CRITICAL</text>
+            <text x="225" y="236" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="'JetBrains Mono'">FRICTION</text>
+
+            <!-- Line Labels -->
+            <text x="120" y="170" fill="#ef4444" font-size="9" font-family="'JetBrains Mono'">POLICE ENCOUNTERS</text>
+            <text x="310" y="170" fill="#06b6d4" font-size="9" font-family="'JetBrains Mono'">INFILTRATION INTEL</text>
+            <text x="225" y="335" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="'JetBrains Mono'">SYNDICATE BROTHERHOOD & SUSPICION</text>
+          </svg>
+
+          <!-- Top Node: Choudhary Aslam (Sanjay Dutt) -->
+          <div class="absolute top-[12%] left-1/2 transform -translate-x-1/2 text-center">
+            <div class="w-16 h-16 rounded-full bg-red-950/80 border-2 border-red-500 flex items-center justify-center shadow-lg shadow-red-500/30 mx-auto">
+              <i data-lucide="crosshair" class="w-8 h-8 text-red-400"></i>
+            </div>
+            <div class="mt-2 font-mono text-xs font-bold text-red-400">CHOUDHARY ASLAM</div>
+            <div class="text-[10px] font-mono text-slate-400">Sanjay Dutt (Sindh Police)</div>
+          </div>
+
+          <!-- Bottom Left Node: Rehman Dakait (Akshaye Khanna) -->
+          <div class="absolute bottom-[10%] left-[12%] text-center">
+            <div class="w-16 h-16 rounded-full bg-amber-950/80 border-2 border-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30 mx-auto">
+              <i data-lucide="crown" class="w-8 h-8 text-amber-400"></i>
+            </div>
+            <div class="mt-2 font-mono text-xs font-bold text-amber-400">REHMAN DAKAIT</div>
+            <div class="text-[10px] font-mono text-slate-400">Akshaye Khanna (Lyari Kingpin)</div>
+          </div>
+
+          <!-- Bottom Right Node: Hamza Mazari (Ranveer Singh) -->
+          <div class="absolute bottom-[10%] right-[12%] text-center">
+            <div class="w-16 h-16 rounded-full bg-cyan-950/80 border-2 border-cyan-500 flex items-center justify-center shadow-lg shadow-cyan-500/30 mx-auto">
+              <i data-lucide="user-check" class="w-8 h-8 text-cyan-400"></i>
+            </div>
+            <div class="mt-2 font-mono text-xs font-bold text-cyan-400">HAMZA MAZARI</div>
+            <div class="text-[10px] font-mono text-slate-400">Ranveer Singh (Undercover Operative)</div>
+          </div>
+
+        </div>
+
+        <div class="p-3 bg-red-950/20 rounded border border-red-900/40 font-mono text-xs text-red-300">
+          STATUS: Triad volatile. One miscalculated sentence triggers an all-out street war between police convoys, Lyari snipers, and RAW intelligence assets.
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================== CHAPTER 5: THE SHADOW MASTER (ARJUN RAMPAL) ======================== -->
+  <section id="ch-shadow" class="scrolly-container border-b border-slate-800/80">
+    
+    <!-- STICKY STAGE (LEFT: Intercept Waveform & Cryptographic Decryption) -->
+    <div class="scrolly-stage">
+      <div class="w-full h-full max-h-[640px] bg-slate-950/95 border border-slate-800 rounded-xl hud-corner-bracket cyan p-6 flex flex-col justify-between shadow-2xl relative">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-mono text-xs font-bold text-cyan-400 flex items-center gap-2">
+            <i data-lucide="radio" class="w-4 h-4 text-cyan-400"></i>
+            RADIO TELEMETRY & CYPHER DECODER
+          </span>
+          <span id="cipher-status-badge" class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
+            SIGNAL LOCKED // 424.150 MHz
+          </span>
+        </div>
+
+        <!-- Dynamic Cipher Output Box -->
+        <div class="my-auto space-y-4">
+          <div class="p-4 rounded bg-slate-900/80 border border-slate-800 font-mono">
+            <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">INTERCEPTED FREQUENCY BURST:</div>
+            <div id="cipher-text-display" class="text-sm sm:text-base font-bold text-emerald-400 tracking-wider break-words leading-relaxed">
+              RAW/ISI-409: %^99#@A4*239K-ZZ-99120...
+            </div>
+          </div>
+
+          <!-- Animated Audio Waveform Simulation -->
+          <div class="p-3 bg-black/60 rounded border border-slate-800">
+            <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
+              <span>SPECTRAL ANALYSIS</span>
+              <span class="text-amber-400">ENCRYPTION: SHADOW-RSA</span>
+            </div>
+            <canvas id="waveform-canvas"></canvas>
+          </div>
+
+          <!-- Decoded Wiretap Summary Card -->
+          <div class="p-4 bg-cyan-950/20 border border-cyan-800/40 rounded-lg">
+            <div class="flex items-center space-x-2 text-cyan-400 text-xs font-mono font-bold uppercase mb-1">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <span>PRIMARY ADVERSARY DOSSIER IDENTIFIED</span>
+            </div>
+            <h5 class="text-slate-100 font-bold text-sm">MAJOR IQBAL // ISI EXTERNAL WING</h5>
+            <p class="text-xs text-slate-400 font-mono mt-1">
+              Confirmed link: Major Iqbal is funding Rehman Dakait's weapon pipelines in exchange for logistics support on an imminent metropolitan strike on Indian soil.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between font-mono text-xs text-slate-400 pt-3 border-t border-slate-800">
+          <span>SOURCE: RAW SAFE-TERMINAL</span>
+          <button onclick="window.audioEngine.playSonarPing()" class="text-cyan-400 hover:text-cyan-300 font-bold">
+            PING FREQUENCY
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCROLLING NARRATIVE STEPS (RIGHT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: The Mastermind Unmasked -->
+      <div class="step-card cyan hud-corner-bracket cyan active-step" data-step-id="stage-shadow-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+            THE PUPPET MASTER
+          </span>
+          <span class="font-mono text-xs text-red-400">TARGET: MAJOR IQBAL</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The Face Behind the Shadow: Major Iqbal</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Through the Karachi smog and underworld transactions, Hamza traces the money trail. Rehman Dakait isn't just an autonomous gangster—he is the operational muscle for <strong class="text-red-400 font-semibold">Major Iqbal (Arjun Rampal)</strong>, a brilliant, ice-cold handler within the covert external wing of the ISI.
+        </p>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Arjun Rampal portrays Iqbal as an elite strategist who never gets his own hands dirty. He uses diplomatic immunity and state funds to outsource terror operations to gangs like Lyari, ensuring zero state culpability when catastrophe strikes.
+        </p>
+        <div class="p-3 bg-cyan-950/30 border border-cyan-800/40 rounded text-xs font-mono text-cyan-300 space-y-1">
+          <div class="font-bold text-cyan-400">DECRYPTED MEMORANDUM:</div>
+          <div>"The shipments from Lyari will converge at sea. When the fireworks go off in India, the world will blame local syndicates. We remain invisible."</div>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mt-4">
+          The clock is ticking. The blueprint for the terror attack has been finalized. If Hamza does not strike now, thousands will die.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================== CHAPTER 6: OPERATION DHURANDHAR / CLIMAX ======================== -->
+  <section id="ch-climax" class="scrolly-container reverse border-b border-slate-800/80 bg-[#060a10]">
+    
+    <!-- SCROLLING NARRATIVE STEPS (LEFT) -->
+    <div class="scrolly-steps">
+      
+      <!-- STEP 1: Execute Directive -->
+      <div class="step-card crimson hud-corner-bracket crimson active-step" data-step-id="stage-climax-1">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/30">
+            CODEWORD: DHURANDHAR
+          </span>
+          <span class="font-mono text-xs text-red-400">TRANSMISSION ACTIVE</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Ajay Sanyal: "Execute Order Dhurandhar"</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          In Delhi, Ajay Sanyal receives Hamza's micro-burst confirmation. The evidence is irrefutable. Sanyal picks up the direct red phone to the Prime Minister's Office, says three words:
+        </p>
+        <div class="text-center my-6 p-4 bg-red-950/40 border border-red-600/50 rounded-lg">
+          <span class="text-2xl sm:text-3xl font-serif font-black tracking-widest text-red-500 uppercase">
+            "UNLEASH DHURANDHAR"
+          </span>
+        </div>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+          No more stealth. No more playing along. Hamza Ali Mazari tears off his syndicate disguise. The Indian commando emerges inside the beating heart of Karachi.
+        </p>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          In an electrifying tactical assault across Karachi harbor, safehouses explode, shipping containers are breached, and Hamza wages a one-man war against an entire army of syndicate gunmen.
+        </p>
+      </div>
+
+      <!-- STEP 2: The Sequel Setup: Dhurandhar - The Revenge -->
+      <div class="step-card hud-corner-bracket" data-step-id="stage-climax-2">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            MARCH 2026 // THE REVENGE
+          </span>
+          <span class="font-mono text-xs text-amber-400">PART 2 ROADMAP</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">The War is Just Beginning: The Revenge</h3>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          Director Aditya Dhar crafts *Dhurandhar* not as a single movie, but as a monumental two-part espionage epic. 
+        </p>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+          While Part 1 (released Dec 5, 2025) depicts the grueling deep infiltration, the bloody street power plays, and the discovery of the terror network, the sequel <strong class="text-amber-400 font-bold">"Dhurandhar: The Revenge"</strong> (March 2026) unleashes the full-scale cross-border retribution.
+        </p>
+        <div class="p-4 bg-slate-900 rounded border border-slate-700/80 font-mono text-xs space-y-2">
+          <div class="text-amber-400 font-bold uppercase tracking-wider">// CINEMATIC UNIVERSE INTEL:</div>
+          <p class="text-slate-300">• Targeted high-value extraction behind enemy lines</p>
+          <p class="text-slate-300">• Unflinching historical reckoning for IC-814 & Parliament martyrs</p>
+          <p class="text-slate-300">• Final showdown between Hamza Mazari, Major Iqbal, and Choudhary Aslam</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STICKY STAGE (RIGHT: Tactical Breach Monitor) -->
+    <div class="scrolly-stage">
+      <div class="w-full h-full max-h-[640px] bg-slate-950/95 border border-slate-800 rounded-xl hud-corner-bracket crimson p-6 flex flex-col justify-between shadow-2xl relative">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-mono text-xs font-bold text-red-400 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+            LIVE COMBAT TELEMETRY // BERTH 14
+          </span>
+          <span id="op-status-badge" class="px-3 py-1 bg-red-600/30 border border-red-500 text-red-400 text-xs font-mono font-bold tracking-widest uppercase rounded">
+            BREACH INITIATED
+          </span>
+        </div>
+
+        <!-- Combat Visual Simulation Grid -->
+        <div class="my-auto space-y-4">
+          
+          <!-- Live Thermal Satellite Simulation Box -->
+          <div class="relative w-full h-56 rounded bg-[#070d18] border border-red-500/30 overflow-hidden flex items-center justify-center">
+            
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 240">
+              <!-- Warehouse Layout -->
+              <rect x="50" y="40" width="300" height="160" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,4"/>
+              
+              <!-- Hotspots: Enemy Hostiles in Red -->
+              <circle cx="120" cy="80" r="4" fill="#ef4444" />
+              <circle cx="140" cy="120" r="4" fill="#ef4444" />
+              <circle cx="280" cy="90" r="4" fill="#ef4444" />
+              <circle cx="320" cy="150" r="4" fill="#ef4444" />
+              <circle cx="200" cy="60" r="4" fill="#ef4444" />
+
+              <!-- Operative Asset: Hamza in Amber -->
+              <circle cx="210" cy="140" r="7" fill="#f59e0b" />
+              <circle cx="210" cy="140" r="14" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3" />
+
+              <!-- Blast Wave Vector -->
+              <circle cx="290" cy="100" r="24" fill="rgba(245,158,11,0.2)" stroke="#f59e0b" stroke-width="1"/>
+            </svg>
+
+            <div class="absolute top-3 left-3 font-mono text-[10px] text-red-400 bg-black/80 px-2 py-0.5 rounded border border-red-500/40">
+              SATELLITE THERMAL OVERLAY // LIVE
+            </div>
+
+            <div class="absolute bottom-3 right-3 font-mono text-[10px] text-amber-400 bg-black/80 px-2 py-0.5 rounded border border-amber-500/40">
+              ASSET: HAMZA ENGAGING
+            </div>
+
+          </div>
+
+          <!-- Time to Extraction Counter -->
+          <div class="p-4 bg-slate-900/90 rounded border border-slate-800 flex items-center justify-between font-mono">
+            <div>
+              <div class="text-[10px] text-slate-500 uppercase">T-MINUS EXTRACTION WINDOW</div>
+              <div id="op-countdown-timer" class="text-xl sm:text-2xl font-bold text-red-400">00:04:12</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-slate-500 uppercase">EXTRACTION VEHICLE</div>
+              <div class="text-xs font-bold text-cyan-400">SUBMERSIBLE 'VARUNA'</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="font-mono text-xs text-slate-400 border-t border-slate-800 pt-3 flex items-center justify-between">
+          <span>CASUALTY RATIO: ADVERSARY 100%</span>
+          <span class="stamp stamp-declassified text-[10px] py-0.5 px-2">MISSION ACCOMPLISHED</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================== INTERACTIVE CHARACTER DOSSIER ARCHIVE ======================== -->
+  <section id="character-dossiers" class="py-24 px-6 sm:px-12 lg:px-24 bg-[#05080e] border-b border-slate-800">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-mono px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 uppercase tracking-widest font-bold">
+          CONFIDENTIAL PERSONNEL ARCHIVE
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-4 uppercase">
+          Key Operatives & Adversaries
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Click any operative card to open their declassified dossier, tactical background, combat profile, and psychological assessment.
+        </p>
+      </div>
+
+      <!-- Character Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: Ranveer Singh -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-classified text-[10px]">DEEP COVER</span>
+              <span class="text-xs font-mono text-cyan-400">CODENAME: PHANTOM-9</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-amber-400 transition-colors">Ranveer Singh</h3>
+            <p class="text-xs font-mono text-amber-400 mt-0.5">Hamza Ali Mazari / Capt. Jaskirat</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              India's deepest sleeper asset. Stripped of his identity to infiltrate the ganglands of Karachi and sever state-backed terror infrastructure.
+            </p>
+          </div>
+          <button data-open-dossier="ranveer" class="mt-6 w-full btn-tactical text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+        <!-- CARD 2: Akshaye Khanna -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-classified text-[10px]">CRIME SYNDICATE</span>
+              <span class="text-xs font-mono text-amber-400">CODENAME: WARLORD</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-amber-400 transition-colors">Akshaye Khanna</h3>
+            <p class="text-xs font-mono text-amber-400 mt-0.5">Rehman Dakait</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              The intellectual kingpin of Lyari's gangland. Cold, feared, wielding political influence and heavy weapons across Karachi's underbelly.
+            </p>
+          </div>
+          <button data-open-dossier="akshaye" class="mt-6 w-full btn-tactical text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+        <!-- CARD 3: Sanjay Dutt -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-red-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket crimson">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-classified text-[10px]">ENCOUNTER POLICE</span>
+              <span class="text-xs font-mono text-red-400">CODENAME: BULLET</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors">Sanjay Dutt</h3>
+            <p class="text-xs font-mono text-red-400 mt-0.5">S.P. Choudhary Aslam</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              Legendary encounter specialist cop of Sindh Police. Feared by criminals and superiors alike, enforcing ruthless justice with aviators and firepower.
+            </p>
+          </div>
+          <button data-open-dossier="sanjay" class="mt-6 w-full btn-tactical text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+        <!-- CARD 4: R. Madhavan -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-cyan-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket cyan">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-declassified text-[10px]">STRATEGIC ASSET</span>
+              <span class="text-xs font-mono text-cyan-400">CODENAME: ARCHITECT</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-cyan-400 transition-colors">R. Madhavan</h3>
+            <p class="text-xs font-mono text-cyan-400 mt-0.5">Ajay Sanyal (IB Director)</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              The grandmaster strategist in New Delhi who conceptualized Project Dhurandhar to permanently secure India against deniable proxy warfare.
+            </p>
+          </div>
+          <button data-open-dossier="madhavan" class="mt-6 w-full btn-tactical cyan text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+        <!-- CARD 5: Arjun Rampal -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-red-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket crimson">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-classified text-[10px]">HOSTILE HANDLER</span>
+              <span class="text-xs font-mono text-red-400">CODENAME: SHADOW-CHIEF</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors">Arjun Rampal</h3>
+            <p class="text-xs font-mono text-red-400 mt-0.5">Major Iqbal (ISI External Ops)</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              Covert intelligence mastermind pulling the strings of criminal syndicates, redirecting state money into cross-border strikes with zero accountability.
+            </p>
+          </div>
+          <button data-open-dossier="arjun" class="mt-6 w-full btn-tactical text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+        <!-- CARD 6: Sara Arjun -->
+        <div class="bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between hud-corner-bracket">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="stamp stamp-declassified text-[10px]">LOCAL CONTACT</span>
+              <span class="text-xs font-mono text-amber-400">CODENAME: CANARY-9</span>
+            </div>
+            <h3 class="text-xl font-bold font-serif text-white group-hover:text-amber-400 transition-colors">Sara Arjun</h3>
+            <p class="text-xs font-mono text-amber-400 mt-0.5">Yalina Jamali</p>
+            <p class="text-xs text-slate-400 mt-3 line-clamp-3 leading-relaxed">
+              Karachi neighborhood resident caught in the gang wars, acting as the critical dead-drop conduit and sanctuary for Hamza in his darkest moments.
+            </p>
+          </div>
+          <button data-open-dossier="sara" class="mt-6 w-full btn-tactical text-xs justify-center py-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>VIEW FULL DOSSIER</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== THE DIRECTOR'S VISION ======================== -->
+  <section class="py-20 px-6 sm:px-12 lg:px-24 bg-[#070b12] border-b border-slate-800">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      <div>
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-xs uppercase tracking-widest font-bold mb-4">
+          <i data-lucide="film" class="w-3.5 h-3.5"></i>
+          <span>BEHIND THE CAMERA</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">
+          Aditya Dhar: Re-Architecting Indian Espionage Cinema
+        </h2>
+        <p class="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+          Following the groundbreaking success and National Award triumph of <strong class="text-cyan-400 font-semibold">Uri: The Surgical Strike</strong>, filmmaker Aditya Dhar ventures into the deepest, unvarnished realities of South Asian geopolitics with <strong class="text-amber-400 font-semibold">Dhurandhar</strong>.
+        </p>
+        <p class="mt-3 text-slate-400 text-sm leading-relaxed">
+          Rather than stylized hyperbole, Dhar anchors the narrative in historical intelligence doctrines, the infamous 1999–2001 catalyst events, and the brutal reality of undercover espionage where agents have no safety net.
+        </p>
+        
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4 font-mono text-xs">
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded">
+            <div class="text-slate-500">PART 1 RELEASE</div>
+            <div class="text-amber-400 font-bold mt-1">DEC 5, 2025</div>
+          </div>
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded">
+            <div class="text-slate-500">PART 2 RELEASE</div>
+            <div class="text-cyan-400 font-bold mt-1">MARCH 2026</div>
+          </div>
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded">
+            <div class="text-slate-500">CINEMATOGRAPHY</div>
+            <div class="text-emerald-400 font-bold mt-1">ANAMORPHIC RAW</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Director's Quote Box -->
+      <div class="p-8 rounded-xl bg-slate-900/60 border border-slate-800 hud-corner-bracket relative">
+        <i data-lucide="quote" class="w-10 h-10 text-amber-500/20 absolute top-6 right-6"></i>
+        <h4 class="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">DIRECTOR'S STATEMENT</h4>
+        <p class="italic text-slate-200 text-sm sm:text-base leading-relaxed font-serif">
+          "For decades, we have celebrated the soldiers who defend the frontier under the sunlight. But there are men whose names are never carved on monuments—who walk into foreign hostile cities, live under false identities, and sacrifice their souls so the nation can sleep in peace. Dhurandhar is their untold cold war."
+        </p>
+        <div class="mt-6 flex items-center space-x-3 pt-4 border-t border-slate-800">
+          <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/50 flex items-center justify-center font-bold font-mono text-amber-400">
+            AD
+          </div>
+          <div>
+            <div class="text-xs font-mono font-bold text-white">ADITYA DHAR</div>
+            <div class="text-[10px] font-mono text-slate-400">Writer, Director & Co-Producer</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== INTERACTIVE RAW TERMINAL ======================== -->
+  <section id="mission-terminal" class="py-20 px-6 sm:px-12 lg:px-24 bg-[#040609]">
+    <div class="max-w-4xl mx-auto">
+      
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="terminal" class="w-5 h-5 text-amber-400"></i>
+          <h3 class="font-mono text-sm font-bold text-white uppercase tracking-wider">SECURE RAW COMMAND TERMINAL (NODE-04)</h3>
+        </div>
+        <span class="text-xs font-mono text-slate-500">PROTOCOL: RAW-SHELL v4.2</span>
+      </div>
+
+      <!-- Terminal Window -->
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="text-xs text-slate-400 ml-2 font-mono">session: root@raw-dhurandhar-gateway</span>
+          </div>
+          <span class="text-[11px] text-cyan-400 font-mono">CONNECTION ENCRYPTED</span>
+        </div>
+
+        <!-- Terminal Output -->
+        <div id="terminal-command-output" class="terminal-body space-y-2">
+          <div class="text-emerald-400 font-bold">===============================================================</div>
+          <div class="text-emerald-400 font-bold">  OPERATION DHURANDHAR // COLD ARCHIVE INTERFACE INITIALIZED  </div>
+          <div class="text-emerald-400 font-bold">===============================================================</div>
+          <div class="text-slate-400 text-xs mt-2">Type <span class="text-amber-400 font-bold">'help'</span> to view available intelligence commands or click quick-commands below.</div>
+        </div>
+
+        <!-- Quick Command Helper Chips -->
+        <div class="px-4 py-2 bg-slate-950 border-t border-slate-900 flex flex-wrap items-center gap-2">
+          <span class="text-[10px] font-mono text-slate-500 uppercase">QUICK COMMANDS:</span>
+          <button data-terminal-cmd="status" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] font-mono">status</button>
+          <button data-terminal-cmd="cast" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] font-mono">cast</button>
+          <button data-terminal-cmd="intel" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] font-mono">intel</button>
+          <button data-terminal-cmd="director" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] font-mono">director</button>
+          <button data-terminal-cmd="part2" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] font-mono">part2</button>
+          <button data-terminal-cmd="decrypt" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 border border-slate-800 text-[11px] font-mono">decrypt</button>
+          <button data-terminal-cmd="clear" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-red-500/20 text-slate-300 hover:text-red-300 border border-slate-800 text-[11px] font-mono">clear</button>
+        </div>
+
+        <!-- Terminal Command Form -->
+        <form id="terminal-form" class="p-3 bg-slate-950/80 border-t border-slate-800 flex items-center space-x-2">
+          <span class="text-amber-400 font-mono text-xs font-bold">root@raw-node-04:~$</span>
+          <input 
+            type="text" 
+            id="terminal-command-input" 
+            placeholder="Type command here (e.g. status, cast, decrypt, help)..." 
+            class="flex-1 bg-transparent border-0 outline-none text-slate-100 font-mono text-xs focus:ring-0 placeholder:text-slate-600"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button type="submit" class="px-3 py-1 bg-amber-500 text-black font-mono font-bold text-xs rounded hover:bg-amber-400 transition-colors">
+            EXEC
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="py-12 px-6 sm:px-12 bg-[#030508] border-t border-slate-800 font-mono text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center space-x-3">
+        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+        <span class="text-white font-bold font-serif text-sm tracking-wider">DHURANDHAR: THE COLD ARCHIVE</span>
+      </div>
+
+      <div class="text-center md:text-left text-slate-400">
+        A cinematic interactive scrollytelling web experience on Aditya Dhar's espionage duology.
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <a href="#ch-catalyst" class="hover:text-amber-400 transition-colors">TOP OF ARCHIVE ↑</a>
+        <span>•</span>
+        <span class="text-slate-600">DISAVOWED UPON READING</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ======================== CHARACTER DOSSIER MODAL ======================== -->
+  <div id="dossier-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md">
+    <div id="dossier-modal-content" class="relative w-full max-w-2xl bg-slate-950 border border-amber-500/40 rounded-xl p-6 sm:p-8 hud-corner-bracket shadow-2xl overflow-y-auto max-h-[90vh]">
+      
+      <!-- Close Button -->
+      <button id="dossier-modal-close" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-800 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="stamp stamp-classified text-xs">TOP SECRET</span>
+        <span id="modal-char-codename" class="font-mono text-xs text-cyan-400 font-bold tracking-widest uppercase">CODENAME: PHANTOM-9</span>
+      </div>
+
+      <h3 id="modal-char-name" class="text-2xl sm:text-3xl font-serif font-black text-white uppercase">
+        HAMZA ALI MAZARI / JASKIRAT SINGH
+      </h3>
+      <div id="modal-char-actor" class="text-xs font-mono text-amber-400 uppercase font-bold mt-1">
+        PORTRAYED BY: RANVEER SINGH
+      </div>
+
+      <!-- Dossier Metadata Table -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6 font-mono text-xs bg-slate-900/80 p-4 rounded-lg border border-slate-800">
+        <div>
+          <span class="text-slate-500 block">OPERATIONAL ROLE:</span>
+          <span id="modal-char-role" class="text-slate-200 font-semibold">Undercover Infiltrator</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block">AFFILIATION:</span>
+          <span id="modal-char-affiliation" class="text-slate-200 font-semibold">RAW // Lyari Syndicate</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block">THREAT EVALUATION:</span>
+          <span id="modal-char-threat" class="text-red-400 font-bold">EXTREME (LEVEL 5)</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block">TACTICAL SPECIALTY:</span>
+          <span id="modal-char-specialty" class="text-cyan-400 font-semibold">Close Combat & Extraction</span>
+        </div>
+      </div>
+
+      <!-- Biography -->
+      <div class="space-y-3">
+        <h4 class="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider">PSYCHOLOGICAL ASSESSMENT & BACKGROUND</h4>
+        <p id="modal-char-bio" class="text-slate-300 text-sm leading-relaxed font-sans">
+          A disciplined commando stripped of his legal identity to penetrate the blood-soaked criminal veins of Karachi.
+        </p>
+      </div>
+
+      <!-- Quote -->
+      <div class="mt-6 p-4 rounded bg-amber-950/20 border-l-2 border-amber-500 text-amber-200/90 font-serif italic text-sm">
+        <p id="modal-char-quote">
+          "A soldier dies for his flag. An undercover spy dies in the dark, forgotten by his own country."
+        </p>
+      </div>
+
+      <!-- Footer Action -->
+      <div class="mt-6 pt-4 border-t border-slate-800 flex justify-end">
+        <button onclick="document.getElementById('dossier-modal-close').click()" class="btn-tactical text-xs px-5 py-2">
+          CLOSE DOSSIER
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lucide Icon Renderer & App Logic -->
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide SVG Icons
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

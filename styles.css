@@ -1,0 +1,515 @@
+/* DHURANDHAR: THE COLD ARCHIVE - CINEMATIC SCROLLYTELLING STYLES */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+  --bg-deep: #05070a;
+  --bg-surface: #0a0f16;
+  --bg-card: #0f1724;
+  --bg-card-glass: rgba(15, 23, 36, 0.78);
+  --border-dim: rgba(255, 255, 255, 0.08);
+  --border-amber: rgba(245, 158, 11, 0.35);
+  --border-cyan: rgba(6, 182, 212, 0.35);
+  --border-crimson: rgba(239, 68, 68, 0.4);
+  
+  --amber-primary: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.25);
+  --cyan-primary: #06b6d4;
+  --cyan-glow: rgba(6, 182, 212, 0.25);
+  --crimson-primary: #ef4444;
+  --crimson-glow: rgba(239, 68, 68, 0.3);
+  --radar-green: #10b981;
+  
+  --font-serif: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Rajdhani', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06090e;
+}
+::-webkit-scrollbar-thumb {
+  background: #23354b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber-primary);
+}
+
+/* Base Body & CRT Noise Layer */
+body {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 50%),
+    linear-gradient(to bottom, #05070a, #070b10, #040608);
+}
+
+/* CRT Scanlines Overlay */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.015),
+    rgba(0, 255, 0, 0.005),
+    rgba(0, 0, 255, 0.015)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+body.crt-disabled .crt-overlay {
+  opacity: 0;
+}
+
+/* Subtle Vignette */
+.vignette-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 200px rgba(0, 0, 0, 0.95);
+}
+
+/* HUD Top Header */
+.hud-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-dim);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+/* Telemetry & Scroll Progress Bar */
+.scroll-tracker-bar {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #f59e0b, #ef4444, #06b6d4);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  z-index: 101;
+  transition: width 0.05s linear;
+}
+
+/* Military Corner Brackets */
+.hud-corner-bracket {
+  position: relative;
+}
+.hud-corner-bracket::before,
+.hud-corner-bracket::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+.hud-corner-bracket::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--amber-primary);
+  border-left: 2px solid var(--amber-primary);
+}
+.hud-corner-bracket::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--amber-primary);
+  border-right: 2px solid var(--amber-primary);
+}
+
+.hud-corner-bracket.cyan::before,
+.hud-corner-bracket.cyan::after {
+  border-color: var(--cyan-primary);
+}
+
+.hud-corner-bracket.crimson::before,
+.hud-corner-bracket.crimson::after {
+  border-color: var(--crimson-primary);
+}
+
+/* Redaction Effects */
+.redacted {
+  position: relative;
+  background-color: #1a2230;
+  color: #1a2230;
+  border-radius: 2px;
+  padding: 0 4px;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  font-family: var(--font-mono);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.redacted::after {
+  content: 'TOP SECRET';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  color: #ef4444;
+  font-size: 0.7em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  transition: opacity 0.25s ease;
+}
+.redacted:hover::after,
+.redacted.revealed::after {
+  opacity: 0;
+  pointer-events: none;
+}
+.redacted:hover,
+.redacted.revealed {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+}
+
+/* Declassified Stamp */
+.stamp {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  border: 2px solid;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+.stamp-classified {
+  color: #ef4444;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+.stamp-declassified {
+  color: #10b981;
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Scrollytelling Section Layouts */
+.scrolly-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 200vh;
+}
+
+@media (min-width: 1024px) {
+  .scrolly-container {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+  .scrolly-container.reverse {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+/* Sticky Stage (Visual Graphic / Interactive HUD) */
+.scrolly-stage {
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Scrolling Narrative Steps */
+.scrolly-steps {
+  position: relative;
+  z-index: 20;
+  padding: 8vh 1.5rem 25vh 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24vh;
+}
+
+.step-card {
+  background: var(--bg-card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-dim);
+  border-radius: 8px;
+  padding: 2.25rem;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.4;
+  transform: translateY(20px) scale(0.97);
+}
+
+.step-card.active-step {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  border-color: var(--border-amber);
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.18), 0 0 20px rgba(245, 158, 11, 0.08);
+}
+
+.step-card.active-step.cyan {
+  border-color: var(--border-cyan);
+  box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.18), 0 0 20px rgba(6, 182, 212, 0.08);
+}
+
+.step-card.active-step.crimson {
+  border-color: var(--border-crimson);
+  box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.22), 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+/* Military Coordinate & Telemetry HUD elements */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+.telemetry-item {
+  background: rgba(10, 15, 24, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+}
+
+/* Radar Canvas and Target Circles */
+.radar-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: radial-gradient(circle at center, #0e1726 0%, #060a10 75%);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  overflow: hidden;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9), 0 0 20px rgba(6, 182, 212, 0.05);
+}
+
+.radar-sweep-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(6, 182, 212, 0.8), transparent);
+  transform-origin: 0 0;
+  animation: radarRotate 4s linear infinite;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulsing Hotspot Markers */
+.map-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+.map-marker .ping {
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  background-color: inherit;
+  opacity: 0.6;
+  animation: pingEffect 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.map-marker .dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 12px currentColor;
+}
+
+@keyframes pingEffect {
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Glitch Title Animation */
+.glitch-text {
+  position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 #ef4444;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 #06b6d4;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 44px, 0); }
+  20% { clip: rect(65px, 9999px, 80px, 0); }
+  40% { clip: rect(20px, 9999px, 60px, 0); }
+  60% { clip: rect(85px, 9999px, 120px, 0); }
+  80% { clip: rect(40px, 9999px, 70px, 0); }
+  100% { clip: rect(15px, 9999px, 95px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(45px, 9999px, 80px, 0); }
+  20% { clip: rect(15px, 9999px, 30px, 0); }
+  40% { clip: rect(70px, 9999px, 110px, 0); }
+  60% { clip: rect(25px, 9999px, 60px, 0); }
+  80% { clip: rect(90px, 9999px, 130px, 0); }
+  100% { clip: rect(35px, 9999px, 75px, 0); }
+}
+
+/* Audio Visualizer Bars */
+.audio-eq-bar {
+  display: inline-block;
+  width: 3px;
+  height: 16px;
+  background-color: var(--amber-primary);
+  margin: 0 1.5px;
+  border-radius: 1px;
+  transform-origin: bottom;
+}
+.audio-playing .audio-eq-bar:nth-child(1) { animation: eqPulse 0.6s infinite ease-in-out; }
+.audio-playing .audio-eq-bar:nth-child(2) { animation: eqPulse 0.9s infinite ease-in-out 0.1s; }
+.audio-playing .audio-eq-bar:nth-child(3) { animation: eqPulse 0.4s infinite ease-in-out 0.2s; }
+.audio-playing .audio-eq-bar:nth-child(4) { animation: eqPulse 0.7s infinite ease-in-out 0.15s; }
+
+@keyframes eqPulse {
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(1); }
+}
+
+/* Mission Terminal Simulation */
+.terminal-window {
+  background: #06090e;
+  border: 1px solid #1f2d40;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #0f1622;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #1a2536;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-body {
+  padding: 1.25rem;
+  min-height: 220px;
+  max-height: 380px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  color: #38bdf8;
+}
+
+/* Custom Tactical Button */
+.btn-tactical {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--amber-primary);
+  color: #fbbf24;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+.btn-tactical:hover {
+  background: var(--amber-primary);
+  color: #05070a;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-tactical.cyan {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: var(--cyan-primary);
+  color: #38bdf8;
+}
+.btn-tactical.cyan:hover {
+  background: var(--cyan-primary);
+  color: #05070a;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+/* Sound Wave Canvas */
+#waveform-canvas {
+  width: 100%;
+  height: 60px;
+  background: rgba(5, 10, 18, 0.8);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
